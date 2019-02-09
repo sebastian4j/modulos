@@ -1,3 +1,3 @@
-module modulo1v {
+module modulos.primero {
   exports com.sebastian.modulos.primero;
 }
