@@ -1,3 +1,3 @@
 module modulos.segundo {
-  requires modulos.comun;
+    requires modulos.comun;
 }

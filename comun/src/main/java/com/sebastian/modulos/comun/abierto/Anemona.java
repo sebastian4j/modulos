@@ -1,14 +1,14 @@
-package com.sebastian.modulos.comun;
+package com.sebastian.modulos.comun.abierto;
 
 /**
  *
  * @author Sebastian Avila A.
  */
-public class Persona {
+public class Anemona {
 
     private int id;
     private String nombre;
-    public String noEncapsulado;
+    public String anm;
 
     public int getId() {
         return id;
@@ -28,7 +28,7 @@ public class Persona {
 
     @Override
     public String toString() {
-        return "Persona{" + "id=" + id + ", nombre=" + nombre + '}';
+        return "Anemona{" + "id=" + id + ", nombre=" + nombre + '}';
     }
 
 }

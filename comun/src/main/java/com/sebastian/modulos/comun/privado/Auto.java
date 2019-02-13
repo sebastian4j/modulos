@@ -6,14 +6,19 @@ package com.sebastian.modulos.comun.privado;
  */
 public class Auto {
 
-  private String marca;
+    private String marca;
 
-  public String getMarca() {
-    return marca;
-  }
+    public String getMarca() {
+        return marca;
+    }
 
-  public void setMarca(String marca) {
-    this.marca = marca;
-  }
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    @Override
+    public String toString() {
+        return "Auto{" + "marca=" + marca + '}';
+    }
 
 }
