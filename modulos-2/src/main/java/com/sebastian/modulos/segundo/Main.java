@@ -13,12 +13,13 @@ public class Main {
     public static void main(final String[] args) {
         accesoPublico();
         errorReflection();
+        sinErrorReflexion();
     }
 
     private static void accesoPublico() {
         final var p = new Persona();
         p.setId(1);
-        p.setNombre("nombre");
+        p.setNombre("primero");
         System.out.println(p);
 
     }
@@ -30,6 +31,22 @@ public class Main {
             for (var ccc : vs) {
                 ccc.setAccessible(true);
                 var inst = ccc.newInstance();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private static void sinErrorReflexion() {
+        try {
+            final var c = Class.forName("com.sebastian.modulos.comun.Persona");
+            final var vs = c.getConstructors();
+            for (var ccc : vs) {
+                ccc.setAccessible(true);
+                var inst = ccc.newInstance();
+                c.getMethod("setId", int.class).invoke(inst, 2);
+                c.getMethod("setNombre", String.class).invoke(inst, "segundo");
+                System.out.println(inst);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
