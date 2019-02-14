@@ -1,5 +1,8 @@
 package com.sebastian.modulos.comun;
 
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodHandles.Lookup;
+
 /**
  *
  * @author Sebastian Avila A.
@@ -8,7 +11,7 @@ public class Persona {
 
     private int id;
     private String nombre;
-    public String noEncapsulado;
+    public String noEncapsulado = "valor-no-encapsulado";
 
     public int getId() {
         return id;
@@ -31,4 +34,7 @@ public class Persona {
         return "Persona{" + "id=" + id + ", nombre=" + nombre + '}';
     }
 
+    public Lookup lookupPrivado() throws IllegalAccessException {
+        return MethodHandles.privateLookupIn(this.getClass(), MethodHandles.lookup());
+    }
 }
