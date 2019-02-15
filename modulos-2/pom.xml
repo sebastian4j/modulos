@@ -65,7 +65,7 @@
         <dependency>
             <artifactId>comun</artifactId>
             <groupId>com.sebastian</groupId>
-            <version>1.11-SNAPSHOT</version>
+            <version>[0,)</version>
         </dependency>
     </dependencies>
 </project>
