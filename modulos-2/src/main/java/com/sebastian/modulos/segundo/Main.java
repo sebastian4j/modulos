@@ -60,7 +60,7 @@ public class Main extends MuestraInfo {
         Persona persona = new Persona();
         System.out.println(persona.isModulePresent("modulos.primero"));
         main.separacion("agregar-configuracion");
-        main.registerNewService("com.sebastian.modulos.primero.exports.Exportado",
+        main.registerNewService(
                 new Path[]{
                     Paths.get("/home/sebastian/java/workspace/maven/modulos/modulos-3/target/modulos-3.jar")
                 });
@@ -306,8 +306,7 @@ public class Main extends MuestraInfo {
                 .defineModulesWithOneLoader(configuration, thisLoader);
     }
 
-    private void registerNewService(
-            String serviceName, Path... modulePaths) {
+    private void registerNewService(Path... modulePaths) {
         ModuleLayer layer = createLayer(modulePaths);
         for (Path p : modulePaths) {
             System.out.println("existe: " + p.toFile().exists());
