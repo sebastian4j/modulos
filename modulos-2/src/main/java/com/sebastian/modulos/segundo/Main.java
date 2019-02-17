@@ -2,18 +2,29 @@ package com.sebastian.modulos.segundo;
 
 import com.sebastian.modulos.comun.MuestraInfo;
 import com.sebastian.modulos.comun.Persona;
+import com.sebastian.modulos.segundo.exportado.Implementable;
 import java.lang.annotation.Annotation;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodHandles.Lookup;
+import java.lang.module.Configuration;
+import java.lang.module.ModuleFinder;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Optional;
+import java.util.ServiceLoader;
+import java.util.ServiceLoader.Provider;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  *
- * java --module-path target/libs:target/modulos-2.jar --module modulos.segundo/com.sebastian.modulos.segundo.Main
+ * java --module-path target/libs:target/modulos-2.jar --module
+ * modulos.segundo/com.sebastian.modulos.segundo.Main
  *
  * @author Sebastian Avila A.
  */
@@ -44,6 +55,15 @@ public class Main extends MuestraInfo {
         main.layerInfo();
         System.out.println("---stack-capas");
         main.buscarEnElStackDeCapas();
+        //////////////////////
+        main.separacion("consulta por otro modulo");
+        Persona persona = new Persona();
+        System.out.println(persona.isModulePresent("modulos.primero"));
+        main.separacion("agregar-configuracion");
+        main.registerNewService("com.sebastian.modulos.primero.exports.Exportado",
+                new Path[]{
+                    Paths.get("/home/sebastian/java/workspace/maven/modulos/modulos-3/target/modulos-3.jar")
+                });
     }
 
     private void accesoPublico() {
@@ -192,6 +212,10 @@ public class Main extends MuestraInfo {
         System.out.println("nombre del actual class loader: " + getClass().getClassLoader().getName());
         System.out.println("nombre del padre del actual class loader: " + getClass().getClassLoader().getParent().getName());
         System.out.println("system/application classloader: " + getClass().getClassLoader().getSystemClassLoader().getName());
+        System.out.println("classloader: " + this.getClass().getClassLoader());
+        System.out.println("module class loader: " + this.getClass().getModule().getClassLoader());
+        System.out.println("platform classloader: " + ClassLoader.getPlatformClassLoader());
+
     }
 
     private void layerInfo() {
@@ -254,6 +278,49 @@ public class Main extends MuestraInfo {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /////////////////////////
+    private Configuration createConfiguration(Path[] modulePaths) {
+        return getThisLayer()
+                .configuration()
+                .resolveAndBind(
+                        ModuleFinder.of(),
+                        ModuleFinder.of(modulePaths),
+                        Collections.emptyList()
+                );
+    }
+
+    private ModuleLayer getThisLayer() {
+        return this.getClass().getModule().getLayer();
+    }
+
+    private ClassLoader getThisLoader() {
+        return this.getClass().getModule().getClassLoader();
+    }
+
+    private ModuleLayer createLayer(Path[] modulePaths) {
+        Configuration configuration = createConfiguration(modulePaths);
+        ClassLoader thisLoader = getThisLoader();
+        return getThisLayer()
+                .defineModulesWithOneLoader(configuration, thisLoader);
+    }
+
+    private void registerNewService(
+            String serviceName, Path... modulePaths) {
+        ModuleLayer layer = createLayer(modulePaths);
+        for (Path p : modulePaths) {
+            System.out.println("existe: " + p.toFile().exists());
+        }
+        Stream<Implementable> imp = ServiceLoader
+                .load(layer, Implementable.class).stream()
+                .map(Provider::get);
+
+        System.out.println("implementable: " + imp);       
+        
+        imp.forEach(i -> {
+            System.out.println(i.saludar());
+        });
 
     }
 
