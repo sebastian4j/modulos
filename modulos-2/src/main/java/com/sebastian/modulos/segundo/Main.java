@@ -15,7 +15,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Optional;
 import java.util.ServiceLoader;
 import java.util.ServiceLoader.Provider;
 import java.util.stream.Collectors;
@@ -269,7 +268,7 @@ public class Main extends MuestraInfo {
                     = StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE)
                             .walk(s -> s.filter(f -> f.getDeclaringClass() != this.getClass()).findFirst()
                             .map(StackWalker.StackFrame::getDeclaringClass).orElseThrow(IllegalStateException::new));
-            System.out.println(c);
+            System.out.println("clase que es distinta a la Main: " + c);
             Module moduloOtroLayer = c.getModule();
             if (moduloOtroLayer.getLayer() != null) {
                 final ModuleLayer ml = moduloOtroLayer.getLayer();
