@@ -52,7 +52,7 @@ public class Main extends MuestraInfo {
         main.mostrarClassLoaderes();
         main.separacion("mostrar-layer");
         main.layerInfo();
-        System.out.println("---stack-capas");
+        main.separacion("---stack-capas");
         main.buscarEnElStackDeCapas();
         //////////////////////
         main.separacion("consulta por otro modulo");
@@ -275,6 +275,7 @@ public class Main extends MuestraInfo {
                 mostrarInfoLayer(ml, moduloOtroLayer);
             }
         } catch (Exception e) {
+            System.out.println("no hay otras capas para buscar otros modulos");
             e.printStackTrace();
         }
     }
