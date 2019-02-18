@@ -8,6 +8,7 @@ import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodHandles.Lookup;
 import java.lang.module.Configuration;
 import java.lang.module.ModuleFinder;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -22,15 +23,14 @@ import java.util.stream.Stream;
 
 /**
  *
- * java --module-path target/libs:target/modulos-2.jar --module
- * modulos.segundo/com.sebastian.modulos.segundo.Main
+ * java --module-path target/libs:target/modulos-2.jar --module modulos.segundo/com.sebastian.modulos.segundo.Main
  *
  * @author Sebastian Avila A.
  */
 public class Main extends MuestraInfo {
 
     public static void main(final String[] args) throws Exception {
-        var main = new Main();
+        Main main = new Main();
         main.separacion("acceso público:");
         main.accesoPublico();
         main.separacion("error reflexion:");
@@ -61,12 +61,14 @@ public class Main extends MuestraInfo {
         main.separacion("agregar-configuracion");
         main.registerNewService(
                 new Path[]{
-                    Paths.get("/home/sebastian/java/workspace/maven/modulos/modulos-3/target/modulos-3.jar")
+                    Paths.get("/home/sebastian/codigo/java/modulos/modulos-3/target/modulos-3.jar")
                 });
+        main.separacion("acceso-protegido");
+        main.instanciarProtegido();
     }
 
     private void accesoPublico() {
-        final var p = new Persona();
+        final Persona p = new Persona();
         p.setId(1);
         p.setNombre("primero");
         System.out.println(p);
@@ -75,14 +77,14 @@ public class Main extends MuestraInfo {
 
     private void errorReflection() {
         try {
-            final var c = Class.forName("com.sebastian.modulos.comun.privado.Auto");
-            final var vs = c.getConstructors();
-            for (var ccc : vs) {
+            final Class<?> c = Class.forName("com.sebastian.modulos.comun.privado.Auto");
+            final Constructor<?>[] vs = c.getConstructors();
+            for (Constructor ccc : vs) {
 //                ccc.setAccessible(true); // runtime exception
                 if (ccc.trySetAccessible()) {
                     System.out.println("<<<<<<<<<<<<<fue posible acceder a la clase");
                     ccc.setAccessible(true);
-                    var inst = ccc.newInstance();
+                    Object inst = ccc.newInstance();
                     System.out.println(inst);
                 } else {
                     System.out.println(">>>>>>>>>>>>>no fue posible acceder a la clase");
@@ -292,6 +294,7 @@ public class Main extends MuestraInfo {
     }
 
     private ModuleLayer getThisLayer() {
+        System.out.println("get-layer: " + this.getClass().getModule().getLayer());
         return this.getClass().getModule().getLayer();
     }
 
@@ -307,20 +310,33 @@ public class Main extends MuestraInfo {
     }
 
     private void registerNewService(Path... modulePaths) {
-        ModuleLayer layer = createLayer(modulePaths);
-        for (Path p : modulePaths) {
-            System.out.println("existe: " + p.toFile().exists());
-        }
-        Stream<Implementable> imp = ServiceLoader
-                .load(layer, Implementable.class).stream()
-                .map(Provider::get);
+        try {
+            ModuleLayer layer = createLayer(modulePaths);
+            for (Path p : modulePaths) {
+                System.out.println("existe: " + p.toFile().exists());
+            }
+            Stream<Implementable> imp = ServiceLoader
+                    .load(layer, Implementable.class).stream()
+                    .map(Provider::get);
 
-        System.out.println("implementable: " + imp);       
-        
-        imp.forEach(i -> {
-            System.out.println(i.saludar());
-        });
+            System.out.println("implementable: " + imp);
+
+            imp.forEach(i -> {
+                System.out.println(i.saludar());
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
+    private void instanciarProtegido() {
+        try {
+            Constructor<?> cns = Class.forName("com.sebastian.modulos.comun.Protegido").getDeclaredConstructor();
+            cns.setAccessible(true);
+            System.out.println(cns.newInstance());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

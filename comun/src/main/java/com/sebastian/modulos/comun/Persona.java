@@ -39,9 +39,8 @@ public class Persona {
     public Lookup lookupPrivado() throws IllegalAccessException {
         return MethodHandles.privateLookupIn(this.getClass(), MethodHandles.lookup());
     }
-    
-    ////////////////////////////////////////////////////////////////////////////
 
+    ////////////////////////////////////////////////////////////////////////////
     public boolean isModulePresent(String moduleName) {
         return searchRootModuleLayer() == null ? false : searchRootModuleLayer()
                 .findModule(moduleName)
@@ -65,19 +64,19 @@ public class Persona {
                         return stack.distinct().peek(s -> {
                             System.out.println("file-name: " + s.getFileName());
                             System.out.println("class-name: " + s.getClassName());
-                            System.out.println("descriptor: " + s.getDescriptor());
+                            //System.out.println("descriptor: " + s.getDescriptor());
                             System.out.println("method-name: " + s.getMethodName());
                             System.out.println("modulo: " + s.getClass().getModule().getName());
-                            System.out.println("class loader: " + 
-                                    s.getClass().getModule().getClassLoader() != null ? 
-                                    s.getClass().getModule().getClassLoader() : 
-                                    null);
+                            System.out.println("class loader: "
+                                    + s.getClass().getModule().getClassLoader() != null
+                                    ? s.getClass().getModule().getClassLoader()
+                                    : null);
                         })
-                            .filter(frame
-                                    -> frame.getDeclaringClass() != this.getClass())
-                            .findFirst()
-                            .map(StackFrame::getDeclaringClass)
-                            .orElseThrow(IllegalStateException::new);
+                                .filter(frame
+                                        -> frame.getDeclaringClass() != this.getClass())
+                                .findFirst()
+                                .map(StackFrame::getDeclaringClass)
+                                .orElseThrow(IllegalStateException::new);
                     });
         } catch (Exception e) {
             e.printStackTrace();

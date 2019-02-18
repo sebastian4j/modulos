@@ -1,6 +1,7 @@
 package com.sebastian.modulos.comun;
 
 import java.lang.annotation.Annotation;
+import java.lang.module.ModuleDescriptor;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -11,11 +12,11 @@ import java.util.stream.Collectors;
 public class MuestraInfo {
 
     public void analizarModulo() {
-        var modulo = getClass().getModule();
-        var anotaciones = Arrays.stream(modulo.getDeclaredAnnotations()).map(Annotation::annotationType)
+        Module modulo = getClass().getModule();
+        String anotaciones = Arrays.stream(modulo.getDeclaredAnnotations()).map(Annotation::annotationType)
                 .map(Object::toString).collect(Collectors.joining(", "));
         System.out.println("anotaciones del modulo: " + anotaciones);
-        var md = modulo.getDescriptor();
+        ModuleDescriptor md = modulo.getDescriptor();
         if (md == null) {
             System.out.println("UNNAMED MODULE");
         } else {

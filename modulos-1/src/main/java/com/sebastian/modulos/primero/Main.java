@@ -28,7 +28,7 @@ public class Main {
      */
     private void abrirJavaLang() {
         try {
-            var base = Object.class.getModule();
+            Module base = Object.class.getModule();
             base.addOpens("java.lang", getClass().getModule());
             System.out.println("fue abierto: " + base.isOpen("java.lang", getClass().getModule()));
         } catch (IllegalCallerException e) {

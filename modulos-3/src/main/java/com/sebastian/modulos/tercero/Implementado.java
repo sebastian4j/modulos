@@ -2,6 +2,7 @@ package com.sebastian.modulos.tercero;
 
 import com.sebastian.modulos.segundo.exportado.Implementable;
 import java.lang.annotation.Annotation;
+import java.lang.module.ModuleDescriptor;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -52,10 +53,10 @@ public class Implementado implements Implementable {
     }
 
     public void analizarModulo(Module modulo) {
-        var anotaciones = Arrays.stream(modulo.getDeclaredAnnotations()).map(Annotation::annotationType)
+        String anotaciones = Arrays.stream(modulo.getDeclaredAnnotations()).map(Annotation::annotationType)
                 .map(Object::toString).collect(Collectors.joining(", "));
         System.out.println("anotaciones del modulo: " + anotaciones);
-        var md = modulo.getDescriptor();
+        ModuleDescriptor md = modulo.getDescriptor();
         if (md == null) {
             System.out.println("UNNAMED MODULE");
         } else {
