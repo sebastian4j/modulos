@@ -1,0 +1,7 @@
+src/main/java/com/sebastian/modulos/comun/Persona.java
+src/main/java/com/sebastian/modulos/comun/abierto/Anemona.java
+src/main/java/com/sebastian/modulos/comun/privado/Auto.java
+src/main/java/com/sebastian/modulos/comun/MuestraInfo.java
+src/main/java/com/sebastian/modulos/comun/Protegido.java
+src/main/java/com/sebastian/modulos/comun/Main.java
+src/main/java/module-info.java
