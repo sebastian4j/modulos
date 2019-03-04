@@ -139,6 +139,11 @@ public class Main extends MuestraInfo {
                     c.getMethod("setId", int.class).invoke(inst, 2);
                     c.getMethod("setNombre", String.class).invoke(inst, "segundo");
                     System.out.println(inst);
+                    System.out.println("obtener properties:" 
+                    + new String(
+                            c.getResourceAsStream("/com/sebastian/modulos/comun/abierto/comun.properties")
+                                    .readAllBytes()));
+                            
                 } else {
                     System.out.println(">>>>>>>>>>>>>no fue posible acceder a la clase");
                 }
