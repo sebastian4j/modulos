@@ -2,6 +2,7 @@ package com.sebastian.modulos.segundo;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 
 /**
  *
@@ -10,6 +11,9 @@ import java.io.InputStream;
 public class OtroMain {
 
     public static void main(String[] args) throws IOException {
+        if (args != null) {
+            Arrays.asList(args).forEach(System.out::println);
+        }
         System.out.println("otro main utilizado");
         System.out.println("recurso en la raiz desde la clase: "
                 + mostrarContenido(OtroMain.class.getResourceAsStream("/segundo.properties")));
@@ -22,7 +26,7 @@ public class OtroMain {
                         .getResourceAsStream("/com/sebastian/modulos/comun/abierto/comun.properties")));
         System.out.println("recurso en otro modulo encapsulado: "
                 + mostrarContenido(OtroMain.class
-                        .getResourceAsStream("/com/sebastian/modulos/comun/abierto/comun.properties")));       
+                        .getResourceAsStream("/com/sebastian/modulos/comun/abierto/comun.properties")));
     }
 
     private static String mostrarContenido(final InputStream is) throws IOException {
