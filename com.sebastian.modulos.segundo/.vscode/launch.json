@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Main",
+            "request": "launch",
+            "mainClass": "com.sebastian.modulos.segundo/com.sebastian.modulos.segundo.Main",
+            "projectName": "com.sebastian.modulos.segundo"
+        }
+    ]
+}

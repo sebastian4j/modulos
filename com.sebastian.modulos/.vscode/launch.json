@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Main",
+            "request": "launch",
+            "mainClass": "com.sebastian.modulos/com.sebastian.modulos.interno.Main",
+            "projectName": "com.sebastian.modulos"
+        }
+    ]
+}
