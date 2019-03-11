@@ -49,6 +49,7 @@ public class Main {
         System.out.println("interim: " + version.interim());
         System.out.println("update: " + version.update());
         System.out.println("patch: " + version.patch());
+        
     }
     
     private static void mostrarUrl(final URL url) throws IOException {
@@ -56,7 +57,7 @@ public class Main {
     }
 
     private void accederClasePackage() throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-        Constructor<?> cns = Class.forName("com.sebastian.modulos.tercero.Protegido").getDeclaredConstructor();
+        Constructor<?> cns = Class.forName("com.sebastian.modulos.segundo.exportado.Protegido").getDeclaredConstructor();
         cns.setAccessible(true);
         System.out.println(((Implementable) cns.newInstance()).saludar());
     }
