@@ -7,3 +7,5 @@
 **/nbactions.xml
 **/.java-version
 wsp.code-workspace
+
+nimbus/nb-configuration\.xml

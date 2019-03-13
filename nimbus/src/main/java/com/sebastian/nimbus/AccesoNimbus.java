@@ -13,11 +13,14 @@ import com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel;
  * compilar con warnings:
  * javac --add-exports=java.desktop/com.sun.java.swing.plaf.nimbus=ALL-UNNAMED -d target/classes src/main/java/com/sebastian/nimbus/AccesoNimbus.java
  * 
- * no ejecutar:
+ * ejecutar con warnings:
  * java -cp target/classes/ com.sebastian.nimbus.AccesoNimbus
  * 
+ * no permite ejecutar:
+ * java --illegal-access=deny -cp target/classes com.sebastian.nimbus.AccesoNimbus
+ * 
  * ejecutar:
- * java --add-exports=java.desktop/com.sun.java.swing.plaf.nimbus=ALL-UNNAMED -cp target/classes com.sebastian.nimbus.AccesoNimbus
+ * java  --illegal-access=deny --add-exports=java.desktop/com.sun.java.swing.plaf.nimbus=ALL-UNNAMED -cp target/classes com.sebastian.nimbus.AccesoNimbus
  * 
  * 
  * @author Sebastian Avila A.
