@@ -25,3 +25,4 @@ pre 2.21.0
 
 mvn clean test -Dsurefire.excludesFile=surefireExcludes.txt
 
+https://maven.apache.org/surefire/maven-surefire-plugin/index.html
