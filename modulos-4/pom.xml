@@ -63,8 +63,8 @@
     </build>
     <dependencies>
         <dependency>
-            <artifactId>comun</artifactId>
             <groupId>com.sebastian</groupId>
+            <artifactId>com.sebastian.modulos.comun</artifactId>
             <version>[0,)</version>
         </dependency>
     </dependencies>
