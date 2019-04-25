@@ -1,0 +1,7 @@
+--add-opens
+  com.sebastian.test.modular/com.sebastian.test.modular=org.junit.platform.commons
+
+--add-reads
+  com.sebastian.test.modular=org.junit.jupiter.api
+--add-reads
+  com.sebastian.test.modular=org.assertj.core
